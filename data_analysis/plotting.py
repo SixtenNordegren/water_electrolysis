@@ -24,16 +24,6 @@ mpr_15 = BL.MPRfile('re_AgCl_we_Co_ce_PT_el_14.mpr')
 mpr_16 = BL.MPRfile('re_AgCl_we_Pd_ce_PT_el_15.mpr')
 mpr_17 = BL.MPRfile('re_AgCl_we_Pt_ce_PT_el_16.mpr')
 
-
-area_list_we_testing = 1e-4 * np.array(
-        [1.20, 0.85, 1.04, 0.60, 0.66, 0.27]
-        ,[1.04, 1.04, 1.04, 1.04, 1.04, 1.04]
-        )
-
-area_list_ce_testing = 1e-4 * np.array(
-        [1.04, 1.04, 1.04, 1.04, 1.04, 1.04],
-        [1.28, 1.60, 1.70, 1.70, 1.60, 0.50])
-
 data_list = [mpr_1, mpr_2, mpr_3, mpr_4, mpr_5, mpr_6, mpr_7, mpr_8, mpr_9, mpr_10, mpr_11, mpr_12, mpr_13, mpr_14, mpr_15, mpr_16]
 data_frame_list = []
 counter = 0
@@ -41,29 +31,22 @@ counter = 0
 for df in data_list:
     data_frame_list.append(pd.DataFrame(df.data))
 
-counter = 0
+# data = pd.DataFrame(mpr.data)
+# data_array = data.to_numpy()
 
-def average_cycle(df):
-    """Takes a dataframe and returns two lists, the first
-    containing the average current for each cycle and one with 
-    the corresponding main potential"""
-
-    cycle_list = []
-    for i in range(1, 5):
-        cycle_list.append(df.loc[df["cycle number"] == i]['Ewe/V'])
-
-    average_list = np.average(cycle_list)
-    potential_list = df['I/mA'][:len(df['Ewe/V'])]
-    return average_list, potential_list
-        
-def current_density_converter(current_list, area_list):
-    current_density_list = []
-    counter = 0
-    for df in data_frame_list:
-        current_list / area_list[counter]
-        counter += 1
 
 def main():
+    counter = 0
+    for data in data_frame_list:
+        plot_name = "data_plot_"+str(counter)
+        if os.path.isfile(plot_name):
+            os.remove(plot_name)
+
+        plt.plot(data['Ewe/V'], data['I/mA'])
+        plt.xlabel("Emil är bra på matte!")
+        plt.savefig(plot_name)
+        plt.close()
+        counter += 1
 
 if __name__ == "__main__":
     main()
