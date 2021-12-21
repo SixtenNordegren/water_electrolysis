@@ -1,36 +1,28 @@
 import numpy as np
 import math as m
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from galvani import BioLogic as BL
 import pandas as pd
 
-mpr_0 = BL.MPRfile("re_AgCl_we_PT_ce_PT_el_0.mpr")
-mpr_1 = BL.MPRfile("re_AgCl_we_PT_ce_PT_el_2.mpr")
-mpr_2 = BL.MPRfile("re_AgCl_we_PT_ce_PT_el_3.mpr")
-mpr_3 = BL.MPRfile("re_AgCl_we_PT_ce_Ni_el_4.mpr")
-mpr_4 = BL.MPRfile("re_AgCl_we_PT_ce_Au_el_5.mpr")
-mpr_5 = BL.MPRfile("re_AgCl_we_PT_ce_Fe_el_6.mpr")
-mpr_6 = BL.MPRfile("re_AgCl_we_PT_ce_Cu_el_7.mpr")
-mpr_7 = BL.MPRfile("re_AgCl_we_PT_ce_Co_el_8.mpr")
-mpr_8 = BL.MPRfile("re_AgCl_we_Au_ce_PT_el_9.mpr")
-mpr_9 = BL.MPRfile("re_AgCl_we_Fe_ce_PT_el_10.mpr")
-mpr_10 = BL.MPRfile("re_AgCl_we_Fe_ce_PT_el_11.mpr")
-mpr_11 = BL.MPRfile("re_AgCl_we_Ni_ce_PT_el_12.mpr")
-mpr_12 = BL.MPRfile("re_AgCl_we_Cu_ce_PT_el_13.mpr")
-mpr_13 = BL.MPRfile("re_AgCl_we_Co_ce_PT_el_14.mpr")
-mpr_14 = BL.MPRfile("re_AgCl_we_Pd_ce_PT_el_15.mpr")
-mpr_15 = BL.MPRfile("re_AgCl_we_Pt_ce_PT_el_16.mpr")
+mpr_0 = BL.MPRfile("data/re_AgCl_we_PT_ce_PT_el_0.mpr")
+mpr_1 = BL.MPRfile("data/re_AgCl_we_PT_ce_PT_el_2.mpr")
+mpr_2 = BL.MPRfile("data/re_AgCl_we_PT_ce_PT_el_3.mpr")
+mpr_3 = BL.MPRfile("data/re_AgCl_we_PT_ce_Ni_el_4.mpr")
+mpr_4 = BL.MPRfile("data/re_AgCl_we_PT_ce_Au_el_5.mpr")
+mpr_5 = BL.MPRfile("data/re_AgCl_we_PT_ce_Fe_el_6.mpr")
+mpr_6 = BL.MPRfile("data/re_AgCl_we_PT_ce_Cu_el_7.mpr")
+mpr_7 = BL.MPRfile("data/re_AgCl_we_PT_ce_Co_el_8.mpr")
+mpr_8 = BL.MPRfile("data/re_AgCl_we_Au_ce_PT_el_9.mpr")
+mpr_9 = BL.MPRfile("data/re_AgCl_we_Fe_ce_PT_el_10.mpr")
+mpr_10 = BL.MPRfile("data/re_AgCl_we_Fe_ce_PT_el_11.mpr")
+mpr_11 = BL.MPRfile("data/re_AgCl_we_Ni_ce_PT_el_12.mpr")
+mpr_12 = BL.MPRfile("data/re_AgCl_we_Cu_ce_PT_el_13.mpr")
+mpr_13 = BL.MPRfile("data/re_AgCl_we_Co_ce_PT_el_14.mpr")
+mpr_14 = BL.MPRfile("data/re_AgCl_we_Pd_ce_PT_el_15.mpr")
+mpr_15 = BL.MPRfile("data/re_AgCl_we_Pt_ce_PT_el_16.mpr")
 
-
-# area_list_we_testing = 1e-4 * np.array(
-# [1.20, 0.85, 1.04, 0.60, 0.66, 0.27]
-# ,[1.04, 1.04, 1.04, 1.04, 1.04, 1.04]
-# )
-
-# area_list_ce_testing = 1e-4 * np.array(
-# [1.04, 1.04, 1.04, 1.04, 1.04, 1.04],
-# [1.28, 1.60, 1.70, 1.70, 1.60, 0.50])
 
 data_list = [
     mpr_0,
@@ -56,36 +48,72 @@ data_frame_list = []
 for df in data_list:
     data_frame_list.append(pd.DataFrame(df.data))
 
+# Using the list_beautifyer function is sort of a necsisary evil. And not really
+# an optimal solution. However it's better than the alternatives. I might go 
+# into more details about it in an external refrence file.
 
-def average_cycle(df):
+def list_beutifyer(B):
+    """Takes a list of litst and compares their lenght. Shortens the longer ones
+    untill they are all of the same lenght."""
+    length = 0
+    A = B.copy()
+    for i in range(len(A)):
+        if i == 0:
+            lenght = len(A[i])
+        elif len(A[i-1]) > len(A[i]):
+            lenght = len(A[i])
+    for i in range(len(A)):
+        A[i] = A[i][:lenght]
+    
+    return A
+
+def average_cycle(df, column_name):
     """Takes a dataframe and returns two lists, the first
     containing the average current for each cycle and one with
     the corresponding main potential"""
 
     cycle_list = []
     for i in range(1, 5):
-        cycle_list.append(df.loc[df["cycle number"] == i]["Ewe/V"])
+        bullet = df.loc[df["cycle number"] == i][column_name].to_numpy()
+        cycle_list.append(bullet[:-10])
 
-    average_list = np.average(cycle_list)
-    potential_list = df["I/mA"][: len(df["Ewe/V"])]
-    print(potential_list)
-    return average_list, potential_list
+
+    average_list = np.average(list_beutifyer(cycle_list), axis=0)
+    # potential_list = df["I/mA"][: len(average_list)]
+    return average_list # , potential_list
 
 
 # Important lists for current densities:
+# Currently these current densities are in mA/cm^2 units.
 
 # Platinum Platinum.
 Pl_Pl_I = data_frame_list[2]["I/mA"] / 1.20
 Pl_Pl_V = data_frame_list[2]["Ewe/V"]
+
+Pl_Pl_I_avg = average_cycle(data_frame_list[2], "I/mA") / 1.20
+Pl_Pl_V_avg = average_cycle(data_frame_list[2], "Ewe/V")
+
 # Platinum nickel
-Pl_Ni = data_frame_list[11]["I/mA"] / 0.85
+Pl_Ni_I = data_frame_list[11]["I/mA"] / 0.85
 Pl_Ni_V = data_frame_list[11]["Ewe/V"]
+
+Pl_Ni_I_avg = average_cycle(data_frame_list[11], "I/mA") / 1.20
+Pl_Ni_V_avg = average_cycle(data_frame_list[11], "Ewe/V")
+
 # Platinum copper
-Pl_Cu = data_frame_list[12]["I/mA"] / 0.66
+Pl_Cu_I= data_frame_list[12]["I/mA"] / 0.66
 Pl_Cu_V = data_frame_list[12]["Ewe/V"]
+
+Pl_Cu_I_avg = average_cycle(data_frame_list[12], "I/mA") / 1.20
+Pl_Cu_V_avg = average_cycle(data_frame_list[12], "Ewe/V")
+
 # Platinum gold
-Pl_Au = data_frame_list[8]["I/mA"] / 1.04
+Pl_Au_I = data_frame_list[8]["I/mA"] / 1.04
 Pl_Au_V = data_frame_list[8]["Ewe/V"]
+
+Pl_Au_I_avg = average_cycle(data_frame_list[8], "I/mA") / 1.20
+Pl_Au_V_avg = average_cycle(data_frame_list[8], "Ewe/V")
+
 
 
 # Exchange current density dictionary.
@@ -173,7 +201,9 @@ def Tafel_CD(op, ecd, alpha=1):
 
 
 def main():
-    Tafel_CD(1.23)
+    plt.plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
+    plt.grid()
+    plt.show()
 
 
 if __name__ == "__main__":
