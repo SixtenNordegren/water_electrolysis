@@ -1,7 +1,6 @@
 import numpy as np
 import math as m
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 from galvani import BioLogic as BL
 import pandas as pd
@@ -48,24 +47,28 @@ data_frame_list = []
 for df in data_list:
     data_frame_list.append(pd.DataFrame(df.data))
 
-# Using the list_beautifyer function is sort of a necsisary evil. And not really
-# an optimal solution. However it's better than the alternatives. I might go 
-# into more details about it in an external refrence file.
+# Using the list_beautifier function is sort of a necessary evil. And not really
+# an optimal solution. However it's better than the alternatives. I might go
+# into more details about it in an external reference file.
 
-def list_beutifyer(B):
-    """Takes a list of litst and compares their lenght. Shortens the longer ones
-    untill they are all of the same lenght."""
-    length = 0
+
+def list_beautifier(B):
+    """Takes a list of lists and compares their length. Shortens the longer ones
+    until they are all of the same length."""
+
     A = B.copy()
     for i in range(len(A)):
         if i == 0:
-            lenght = len(A[i])
-        elif len(A[i-1]) > len(A[i]):
-            lenght = len(A[i])
+            length = len(A[0])
+
+        elif length > len(A[i]):
+            length = len(A[i])
+
     for i in range(len(A)):
-        A[i] = A[i][:lenght]
-    
+        A[i] = A[i][:length]
+
     return A
+
 
 def average_cycle(df, column_name):
     """Takes a dataframe and returns two lists, the first
@@ -75,12 +78,10 @@ def average_cycle(df, column_name):
     cycle_list = []
     for i in range(1, 5):
         bullet = df.loc[df["cycle number"] == i][column_name].to_numpy()
-        cycle_list.append(bullet[:-10])
+        cycle_list.append(bullet)
 
-
-    average_list = np.average(list_beutifyer(cycle_list), axis=0)
-    # potential_list = df["I/mA"][: len(average_list)]
-    return average_list # , potential_list
+    average_list = np.average(list_beautifier(cycle_list), axis=0)
+    return average_list
 
 
 # Important lists for current densities:
@@ -101,7 +102,7 @@ Pl_Ni_I_avg = average_cycle(data_frame_list[11], "I/mA") / 1.20
 Pl_Ni_V_avg = average_cycle(data_frame_list[11], "Ewe/V")
 
 # Platinum copper
-Pl_Cu_I= data_frame_list[12]["I/mA"] / 0.66
+Pl_Cu_I = data_frame_list[12]["I/mA"] / 0.66
 Pl_Cu_V = data_frame_list[12]["Ewe/V"]
 
 Pl_Cu_I_avg = average_cycle(data_frame_list[12], "I/mA") / 1.20
@@ -116,25 +117,77 @@ Pl_Au_V_avg = average_cycle(data_frame_list[8], "Ewe/V")
 
 
 
-# Exchange current density dictionary.
-ecd_dict = {
-    "Palladium": 3.0,
-    "Platinum": 3.1,
-    "Rhodium": 3.6,
-    "Iridium": 3.7,
-    "Nickel": 5.2,
-    "Gold": 5.4,
-    "Tungsten": 5.9,
-    "Niobium": 6.8,
-    "Titanium": 8.2,
-    "Cadmium": 10.8,
-    "Manganese": 10.9,
-    "Lead": 12.0,
-    "Mercury": 12.3,
-}
-
 # I found this list on the Wikipedia page for exchange current densities.
 # https://en.wikipedia.org/wiki/Exchange_current_density
+
+
+def list_cropper(A, n=5):
+    """
+    Returns a list with the top 1 / n largest elements of that list.
+
+    This function does care about the sign of element. So -12 is smaller
+    than +1.
+
+    This function should also keep the order of the elements in a given
+    list.
+    """
+
+    B = []
+
+    for element in A:
+        if len(B) == len(A) // n:
+            C = B.copy()
+            C.sort()
+            if element > C[0]:
+                B.remove(C[0])  # We know this is sin
+                B.append(element)
+        else:
+            B.append(element)
+    return B
+
+
+def list_cropper_2(A, n=4):
+    """
+    Takes a list of floats and integers. Returns the largest numbers in
+    an environment around it's largest point.
+
+    This function does care about the sign of the element. So -12 is 
+    smaller than +1 etc.
+
+    This function should also keep the order of the elements in a given
+    list.
+    """
+    A = A.tolist()
+    B = A.copy()
+    C = A.copy()
+
+    B.sort()
+    maximum = B[-1]
+    rope_lenght = len(A) // (2 * n)
+    C = C[C.index(maximum) - rope_lenght : C.index(maximum) + rope_lenght]  # More sin
+
+    return C
+
+
+def least_sqaures(A):
+    """
+    Takes a set of X and Y values from a data set and returns the linear
+    constants in the classical linear equation.
+
+    y = m + kx or y = A + Bx or whatever convention is usually followed.
+
+    """
+    x = np.array(A[0])
+    y = np.array(A[1])
+    if len(x) != len(y):
+        raise TypeError("Both parameters need to be of the same shape.")
+    N = len(y)
+
+    delta = N * np.sum(x ** 2) - np.sum(x) ** 2
+    m = (np.sum(x ** 2) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta
+    k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta
+
+    return m, k
 
 
 def Tafel_OP(cd, ecd, alpha=1):
@@ -199,11 +252,21 @@ def Tafel_CD(op, ecd, alpha=1):
             ans.append(ecd * np.exp(-m.log(10) * op / A))
     return np.array(ans)
 
+# Exchange current density dictionary.
+
+ecd_dict = {
+    "Platinum": least_sqaures([list_cropper_2(Pl_Pl_V_avg), np.log(list_cropper_2(Pl_Pl_I_avg)) / np.log(10)])[0],
+    "Nickel": least_sqaures([list_cropper_2(Pl_Ni_V_avg), np.log(list_cropper_2(Pl_Ni_I_avg)) / np.log(10)])[0],
+    "Gold": least_sqaures([list_cropper_2(Pl_Au_V_avg), np.log(list_cropper_2(Pl_Au_I_avg)) / np.log(10)])[0],
+}
 
 def main():
-    plt.plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
-    plt.grid()
+    plt.plot(np.log(list_cropper_2(Pl_Pl_I_avg)), list_cropper_2(Pl_Pl_V_avg))
+    m, k = least_sqaures([np.log(list_cropper_2(Pl_Pl_I_avg)), list_cropper_2(Pl_Pl_V_avg)])
+    linfit = [x for x in m + k * Pl_Pl_V_avg]
+    plt.plot(linfit)
     plt.show()
+
 
 
 if __name__ == "__main__":
