@@ -47,8 +47,9 @@ data_frame_list = []
 for df in data_list:
     data_frame_list.append(pd.DataFrame(df.data))
 
-# data = pd.DataFrame(mpr.data)
-# data_array = data.to_numpy()
+A = 1 * 2 + 3 / 4
+
+B = 2 + 3 - 4
 
 
 def main():
