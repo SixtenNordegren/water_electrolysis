@@ -83,24 +83,24 @@ def list_cropper_2(X, Y, n=6, peak="max"):
     list.
     """
 
-    Y = Y.tolist()
+    A = Y.tolist()
     X = X.tolist()
 
-    B = Y.copy()
-    C = Y.copy()
-
-    rope_lenght = len(C) // (2 * n)
+    B = A.copy()
+    C = A.copy()
 
     B.sort()
     if peak == "max":
         maximum = B[-1]
     else:
         maximum = B[0]
+    rope_lenght = len(A) // (2 * n)
 
     start = C.index(maximum) - rope_lenght
     finish = C.index(maximum) + rope_lenght
 
     Y = Y[start:finish:1]
+
     X = X[start:finish:1]
 
     return X, Y
@@ -120,15 +120,9 @@ def least_sqaures(x, y):
         raise TypeError("Both parameters need to be of the same shape.")
     N = len(y)
 
-    # delta = N * np.sum(x ** 2) - np.sum(x) ** 2
-    # m = (np.sum(x ** 2) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta
-    # k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta
-
-    k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / (
-        N * np.sum(x ** 2) - (np.sum(x)) ** 2
-    )
-
-    m = (np.sum(y) - k * np.sum(x)) / N
+    delta = N * np.sum(x ** 2) - np.sum(x) ** 2
+    m = (np.sum(x ** 2) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta
+    k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta
 
     return m, k
 
@@ -197,30 +191,30 @@ def Tafel_CD(op, ecd, alpha=1):
 
 
 def ecd(data_i, data_v):
-    """
+    """ 
     Takes two lists of current densities and corresponding potential.
 
     Returns two exhange current densities one for the Oxygen reaction
-    and one for the Hydrogen reaction.
+    and one for the Hydrogen reaction. 
     """
-    op_H = 0.77
-    op_O = 0.45
 
     # Oxygen reaction
-    log_i_s, V_s = list_cropper_2(np.log10(np.array(data_i)), data_v - op_O)
+    log_i_s, V_s = list_cropper_2(data_i, data_v)
+    log_i_s = np.log10(log_i_s)
     m, k = least_sqaures(log_i_s, V_s)
 
     # Hydrogen reaction
-    # Since the hydrogen reaction happens for negative voltage
+    # Since the hydrogen reaction happens for negative voltage 
     # at the working electrode I first need to turn the numbers
     # into possitive ones in order to take the logarith of that
     # set of data. Then since we dont want to keep the actual data
-    # possitive we would want to turn it back into the negatives.
+    # possitive we would want to turn it back into the negatives. 
     # This is what the extra line of code is doing.
 
-    log_i_s_H, V_s_H = list_cropper_2(
-        -1 * np.log10(-1 * data_i), data_v - op_H, n=12, peak="min"
-    )
-    m_H, k_H = least_sqaures(log_i_s_H, V_s_H)
+    i_s_H, V_s_H = list_cropper_2(data_i, data_v, peak="min", n=12)
+    log_i_s_H = np.log10(-1 * np.array(i_s_H))
+    m_H, k_H = least_sqaures(log_i_s_H,-1* V_s_H)
+    m_H, k_H = -m_H, -k_H
 
     return -m / k, -m_H / k_H
+

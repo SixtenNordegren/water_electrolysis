@@ -55,14 +55,16 @@ B = 2 + 3 - 4
 def main():
     counter = 1
     for data in data_frame_list:
-        plot_name = "plots/data_plot_" + str(counter)
+        plot_name = "plots/data_plot_{0}.svg".format(counter)
         if os.path.isfile(plot_name):
             os.remove(plot_name)
 
         plt.plot(data["Ewe/V"], data["I/mA"])
-        plt.xlabel("Something new.")
-        plt.savefig(plot_name)
-        plt.close()
+        plt.xlabel("Voltage (E/V)")
+        plt.ylabel("Current (I/mA)")
+        plt.grid()
+        plt.savefig(plot_name, format='svg')
+        plt.show()
         counter += 1
 
 
