@@ -86,27 +86,80 @@ Pl_Au_I_avg = average_cycle(data_frame_list[8], "I/mA") / 1.04
 Pl_Au_V_avg = average_cycle(data_frame_list[8], "Ewe/V")
 
 # Platinum iron
-Pl_Au_I = data_frame_list[5]["I/mA"] / 1.04
-Pl_Au_V = data_frame_list[5]["Ewe/V"]
+Pl_Fe_I = data_frame_list[5]["I/mA"] / 1.04
+Pl_Fe_V = data_frame_list[5]["Ewe/V"]
 
-Pl_Au_I_avg = average_cycle(data_frame_list[5], "I/mA") / 1.04
-Pl_Au_V_avg = average_cycle(data_frame_list[5], "Ewe/V")
+Pl_Fe_I_avg = average_cycle(data_frame_list[11], "I/mA") / 1.04
+Pl_Fe_V_avg = average_cycle(data_frame_list[11], "Ewe/V")
+
+ecd_oxygen = {
+    "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg)[0],
+    "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[0],
+    "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg)[0],
+    "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg)[0],
+    "Iron": ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[0],
+}
+
+ecd_hydrogen = {
+    "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg)[1],
+    "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[1],
+    "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg)[1],
+    "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg)[1],
+    "Iron": ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[1],
+}
+
 
 def main():
-    fig, axs = plt.subplots(1, 3, sharey=True)
-    axs[0].plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
-    axs[1].plot(Pl_Cu_V_avg, Pl_Cu_I_avg)
-    axs[2].plot(Pl_Fe_V_avg, Pl_Fe_I_avg)
+    # fig, axs = plt.subplots(1, 4, sharey=True)
+    # axs[0].plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
+    # axs[1].plot(Pl_Cu_V_avg, Pl_Cu_I_avg)
+    # axs[2].plot(Pl_Fe_V_avg, Pl_Fe_I_avg)
+    # axs[3].plot(Pl_Ni_V_avg, Pl_Ni_I_avg)
 
-    fig.suptitle('Plots of average values')
-    counter = 0
-    for i in axs:
-        axs[counter].grid()
-        counter += 1
-    axs[0].set_title("test")
-    axs[1].set_title("test")
-    axs[2].set_title("test")
+    # counter = 0
+    # for i in axs:
+    # axs[counter].grid()
+    # axs[counter].set_xlabel("V (v)")
 
+    # counter += 1
+    # axs[0].set_title("Platinum")
+    # axs[1].set_title("Copper")
+    # axs[2].set_title("Iron")
+    # axs[3].set_title("Nickel")
+
+    # axs[0].set_ylabel("i (mA/cm^2)")
+
+    # plt_name = "plots/multiplot_avg_li.pdf"
+    # if os.path.isfile(plt_name) == True:
+    # os.remove(plt_name)
+    # plt.savefig(plt_name, type="pdf")
+    # plt.show()
+
+    Slope_Pl_hydrogen = TafelSlope(Pl_Pl_V_avg, ecd_hydrogen["Platinum"], Pl_Pl_I_avg)
+    
+    Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="min")
+    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="max")
+
+    taf = Tafel_OP(Pl_I, ecd_hydrogen["Platinum"], Slope_Pl_hydrogen)
+    plt.plot(
+        1*Pl_I,
+        1*taf,
+        label="Theoretical prediction",
+    )
+    plt.plot(Pl_I, Pl_V, label="Collected data")
+    plt.legend()
+    plt.grid()
+
+    plt_name = "plots/fin.pdf"
+    plt.xlabel("Current density i (mA / cm^2)")
+    plt.ylabel("Potential V (V)")
+    if os.path.isfile(plt_name) == True:
+        os.remove(plt_name)
+    plt.savefig(plt_name, type="pdf")
     plt.show()
+
+    print(Slope_Pl_hydrogen)
+
+
 if __name__ == "__main__":
     main()

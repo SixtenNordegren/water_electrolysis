@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 from galvani import BioLogic as BL
 import pandas as pd
 
+op_H = 0.77
+op_O = 0.45
+
 
 def list_beautifier(B):
     """Takes a list of lists and compares their length. Shortens the longer ones
@@ -100,8 +103,8 @@ def list_cropper_2(X, Y, n=6, peak="max"):
     start = C.index(maximum) - rope_lenght
     finish = C.index(maximum) + rope_lenght
 
-    Y = Y[start:finish:1]
-    X = X[start:finish:1]
+    Y = np.array(Y[start:finish:1])
+    X = np.array(X[start:finish:1])
 
     return X, Y
 
@@ -117,7 +120,9 @@ def least_sqaures(x, y):
     x = np.array(x)
     y = np.array(y)
     if len(x) != len(y):
-        raise TypeError("Both parameters need to be of the same shape.")
+        raise TypeError("Both parameters need to be of the same shape.\n{0},{1}".format(
+           len(x), len(y) 
+            ))
     N = len(y)
 
     # delta = N * np.sum(x ** 2) - np.sum(x) ** 2
@@ -133,7 +138,7 @@ def least_sqaures(x, y):
     return m, k
 
 
-def Tafel_OP(cd, ecd, alpha=1):
+def Tafel_OP_OLD(cd, ecd, slope):
     """
     Returns the overpotential from current density and exchange current
     density.
@@ -143,12 +148,7 @@ def Tafel_OP(cd, ecd, alpha=1):
     between 1 and 0. I'm not sure how to determining it so I'm leaving it
     as one for the time being.
     """
-    Lambda = m.log(10)
-    k = 1.38e-23  # J/K
-    T = 293.0  # K
-    e = 1.602e-19  # J
-
-    A = Lambda * k * T / (e * alpha)
+    A = slope
 
     ans = []
     # This rather awkward IF statement is here to replace the plus minus sign
@@ -158,7 +158,7 @@ def Tafel_OP(cd, ecd, alpha=1):
     # IF statement takes this into account.
     for i in cd:
         if i >= 0:
-            ans.append(A * m.log(i / ecd) / m.log(10))
+            ans.append(A * np.log10(i / ecd))
         else:
             # Here we take the absolute value of the current density.
             # The practical reason for doing this is that we cant solve
@@ -174,26 +174,44 @@ def Tafel_OP(cd, ecd, alpha=1):
             # When the current is either positive or negative and our
             # treatment of the electrode as a cathode is what it means
             # to take the sign into account.
-            ans.append(-A * m.log(abs(i) / ecd) / m.log(10))
+            ans.append(-A * np.log10(i / ecd))
     return np.array(ans)
 
 
-def Tafel_CD(op, ecd, alpha=1):
+def Tafel_OP(cd, ecd, slope, hydrogen=True):
     """
-    Returns the current density from a known over potential
+    Returns the overpotential from current density and exchange current
+    density.
+    ecd - exchange current density
+    cd - short for current density
+    alpha - Is the charge transfer coefficient. This is supposed a value
+    between 1 and 0. I'm not sure how to determining it so I'm leaving it
+    as one for the time being.
     """
-    Lambda = m.log(10)
-    k = 1.38e-23  # J/K
-    T = 293.0  # K
-    e = 1.602e-19  # J
+    A = slope
 
-    ans = []
-    for i in cd:
-        if i >= 0:
-            ans.append(ecd * np.exp(m.log(10) * op / A))
-        else:
-            ans.append(ecd * np.exp(-m.log(10) * op / A))
+    # When taking the current density for hydrogen we need to convert it 
+    # to positive numbers if we want sensible numbers from the logarithm.
+    if hydrogen == True:
+        ans = -A * np.log10(-1*cd / ecd)
+    else:
+        ans = A * np.log10(cd / ecd)
+
     return np.array(ans)
+
+
+def TafelSlope(OP, ECD, CD, alpha=1, hydrogen="True"):
+    if hydrogen == True:
+         CD, OP = list_cropper_2(
+              -1*np.log10(-1 * np.array(CD)),
+              OP - op_H,
+              n=12, peak="min"
+        )
+    else:
+        CD, OP = list_cropper_2(np.log10(np.array(CD)),  OP - op_O)
+
+    slope = OP / (CD - np.log10(ECD))
+    return np.mean(slope)
 
 
 def ecd(data_i, data_v):
@@ -203,14 +221,13 @@ def ecd(data_i, data_v):
     Returns two exhange current densities one for the Oxygen reaction
     and one for the Hydrogen reaction.
     """
-    op_H = 0.77
-    op_O = 0.45
 
     # Oxygen reaction
     log_i_s, V_s = list_cropper_2(np.log10(np.array(data_i)), data_v - op_O)
     m, k = least_sqaures(log_i_s, V_s)
 
     # Hydrogen reaction
+
     # Since the hydrogen reaction happens for negative voltage
     # at the working electrode I first need to turn the numbers
     # into possitive ones in order to take the logarith of that

@@ -85,6 +85,13 @@ Pl_Au_V = data_frame_list[8]["Ewe/V"]
 Pl_Au_I_avg = average_cycle(data_frame_list[8], "I/mA") / 1.04
 Pl_Au_V_avg = average_cycle(data_frame_list[8], "Ewe/V")
 
+# Platinum iron
+Pl_Fe_I = data_frame_list[10]["I/mA"] / 1.04
+Pl_Fe_V = data_frame_list[10]["Ewe/V"]
+
+Pl_Fe_I_avg = average_cycle(data_frame_list[10], "I/mA") / 1.04
+Pl_Fe_V_avg = average_cycle(data_frame_list[10], "Ewe/V")
+
 
 def main():
 
@@ -100,6 +107,7 @@ def main():
         "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[0],
         "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg)[0],
         "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg)[0],
+        "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[0]
     }
 
     ecd_hydrogen = {
@@ -107,6 +115,7 @@ def main():
         "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[1],
         "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg)[1],
         "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg)[1],
+        "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[1]
     }
 
     print("Oxygen Exchange current densities:")
@@ -151,8 +160,6 @@ def main():
         os.remove(plt_name)
     plt.savefig(plt_name, type="pdf")
     plt.show()
-
-    print(-m_ni / k_ni)
 
 
 if __name__ == "__main__":
