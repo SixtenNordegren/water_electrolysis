@@ -110,6 +110,14 @@ def main():
         "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[0]
     }
 
+    ecd_oxygen = {
+        "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg)[0],
+        "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[0],
+        "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg)[0],
+        "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg)[0],
+        "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[0]
+    }
+
     ecd_hydrogen = {
         "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg)[1],
         "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg)[1],
@@ -118,6 +126,21 @@ def main():
         "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg)[1]
     }
 
+    ecd_oxygen_err = {
+        "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg, err=True)[0],
+        "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg, err=True)[0],
+        "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg, err=True)[0],
+        "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg, err=True)[0],
+        "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg, err=True)[0]
+    }
+
+    ecd_hydrogen_err = {
+        "Platinum": ecd(Pl_Pl_I_avg, Pl_Pl_V_avg, err=True)[1],
+        "Copper": ecd(Pl_Cu_I_avg, Pl_Cu_V_avg, err=True)[1],
+        "Gold": ecd(Pl_Au_I_avg, Pl_Au_I_avg, err=True)[1],
+        "Nickel": ecd(Pl_Ni_I_avg, Pl_Ni_V_avg, err=True)[1],
+        "Iron" : ecd(Pl_Fe_I_avg, Pl_Fe_V_avg, err=True)[1]
+    }
     print("Oxygen Exchange current densities:")
     for key in ecd_oxygen:
         print("{0} & {1} \\\\ \n".format(key, np.around(ecd_oxygen[key], 3)))
@@ -126,40 +149,48 @@ def main():
     for key in ecd_hydrogen:
         print("{0} & {1} \\\\ \n".format(key, np.around(ecd_hydrogen[key], 3)))
 
+    print("Oxygen Exchange current density errors:")
+    for key in ecd_oxygen:
+        print("{0} & {1} \\\\ \n".format(key, np.around(ecd_oxygen_err[key], 3)))
+
+    print("\nHydrogen Exchange current density errors")
+    for key in ecd_hydrogen:
+        print("{0} & {1} \\\\ \n".format(key, np.around(ecd_hydrogen_err[key], 3)))
+
 
     # x, y = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=12, peak="min")
     # x = np.log10(-1 * np.array(x))
     # m, k = least_sqaures(x, -1 * y)
     # regression = [i for i in m + k * np.array(x)]
 
-    log_i = -1 * np.log10(-1 * np.array(Pl_Pl_I_avg))
-    x_ni, y_ni = list_cropper_2(log_i, Pl_Pl_V_avg, n = 8, peak="min")
-    # x_ni, y_ni = -1 * x_ni, -1 * y_ni
+    # log_i = -1 * np.log10(-1 * np.array(Pl_Pl_I_avg))
+    # x_ni, y_ni = list_cropper_2(log_i, Pl_Pl_V_avg, n = 8, peak="min")
+    # # x_ni, y_ni = -1 * x_ni, -1 * y_ni
 
-    m_ni, k_ni = least_sqaures(x_ni, y_ni)
-    regression_ni = [i for i in m_ni + k_ni * np.array(x_ni)]
+    # m_ni, k_ni = least_sqaures(x_ni, y_ni)
+    # regression_ni = [i for i in m_ni + k_ni * np.array(x_ni)]
 
-    plt.plot(x_ni, y_ni, ".", label ="Hydrogen Cropped data")
-    plt.plot(x_ni, regression_ni, label="Hydrogen linear regresion")
+    # plt.plot(x_ni, y_ni, ".", label ="Hydrogen Cropped data")
+    # plt.plot(x_ni, regression_ni, label="Hydrogen linear regresion")
 
-    log_i = np.log10(np.array(Pl_Pl_I_avg))
-    x_ni, y_ni = list_cropper_2(log_i, Pl_Pl_V_avg, n = 6, peak="max")
+    # log_i = np.log10(np.array(Pl_Pl_I_avg))
+    # x_ni, y_ni = list_cropper_2(log_i, Pl_Pl_V_avg, n = 6, peak="max")
 
-    m_ni, k_ni = least_sqaures(x_ni, y_ni)
-    regression_ni = [i for i in m_ni + k_ni * np.array(x_ni)]
+    # m_ni, k_ni = least_sqaures(x_ni, y_ni)
+    # regression_ni = [i for i in m_ni + k_ni * np.array(x_ni)]
 
-    plt.plot(x_ni, y_ni, ".", label ="Oxygen Cropped data")
-    plt.plot(x_ni, regression_ni, label ="Oxygen linear regression" )
-    plt.grid()
-    plt.xlabel("Current density (i)")
-    plt.ylabel("Potentail (V)")
-    plt_name = "plots/Cropped_data.pdf"
-    plt.legend()
+    # plt.plot(x_ni, y_ni, ".", label ="Oxygen Cropped data")
+    # plt.plot(x_ni, regression_ni, label ="Oxygen linear regression" )
+    # plt.grid()
+    # plt.xlabel("Current density (i)")
+    # plt.ylabel("Potentail (V)")
+    # plt_name = "plots/Cropped_data.pdf"
+    # plt.legend()
 
-    if os.path.isfile(plt_name):
-        os.remove(plt_name)
-    plt.savefig(plt_name, type="pdf")
-    plt.show()
+    # if os.path.isfile(plt_name):
+        # os.remove(plt_name)
+    # plt.savefig(plt_name, type="pdf")
+    # plt.show()
 
 
 if __name__ == "__main__":

@@ -109,7 +109,7 @@ def list_cropper_2(X, Y, n=6, peak="max"):
     return X, Y
 
 
-def least_sqaures(x, y):
+def least_sqaures(x, y, err=False):
     """
     Takes a set of X and Y values from a data set and returns the linear
     constants in the classical linear equation.
@@ -120,20 +120,28 @@ def least_sqaures(x, y):
     x = np.array(x)
     y = np.array(y)
     if len(x) != len(y):
-        raise TypeError("Both parameters need to be of the same shape.\n{0},{1}".format(
-           len(x), len(y) 
-            ))
+        raise TypeError(
+            "Both parameters need to be of the same shape.\n{0},{1}".format(
+                len(x), len(y)
+            )
+        )
     N = len(y)
 
-    # delta = N * np.sum(x ** 2) - np.sum(x) ** 2
-    # m = (np.sum(x ** 2) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta
-    # k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta
+    delta = N * np.sum(x ** 2) - np.sum(x) ** 2
+    m = (np.sum(x ** 2) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta
+    k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta
 
-    k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / (
-        N * np.sum(x ** 2) - (np.sum(x)) ** 2
-    )
+    # k = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / (
+    # N * np.sum(x ** 2) - (np.sum(x)) ** 2
+    # )
 
-    m = (np.sum(y) - k * np.sum(x)) / N
+    # m = (np.sum(y) - k * np.sum(x)) / N
+    if err == True:
+        sigma_y = np.sqrt(1 / (N - 2) * np.sum((y - m - k * x) ** 2))
+
+        sigma_m = sigma_y * np.sqrt(np.sum(x ** 2) / delta)
+        sigma_k = sigma_y * np.sqrt(N / delta)
+        return sigma_m, sigma_k
 
     return m, k
 
@@ -190,10 +198,10 @@ def Tafel_OP(cd, ecd, slope, hydrogen=True):
     """
     A = slope
 
-    # When taking the current density for hydrogen we need to convert it 
+    # When taking the current density for hydrogen we need to convert it
     # to positive numbers if we want sensible numbers from the logarithm.
     if hydrogen == True:
-        ans = -A * np.log10(-1*cd / ecd)
+        ans = -A * np.log10(-1 * cd / ecd)
     else:
         ans = A * np.log10(cd / ecd)
 
@@ -202,19 +210,17 @@ def Tafel_OP(cd, ecd, slope, hydrogen=True):
 
 def TafelSlope(OP, ECD, CD, alpha=1, hydrogen="True"):
     if hydrogen == True:
-         CD, OP = list_cropper_2(
-              -1*np.log10(-1 * np.array(CD)),
-              OP - op_H,
-              n=12, peak="min"
+        CD, OP = list_cropper_2(
+            -1 * np.log10(-1 * np.array(CD)), OP - op_H, n=12, peak="min"
         )
     else:
-        CD, OP = list_cropper_2(np.log10(np.array(CD)),  OP - op_O)
+        CD, OP = list_cropper_2(np.log10(np.array(CD)), OP - op_O)
 
     slope = OP / (CD - np.log10(ECD))
     return np.mean(slope)
 
 
-def ecd(data_i, data_v):
+def ecd(data_i, data_v, err=False):
     """
     Takes two lists of current densities and corresponding potential.
 
@@ -239,5 +245,15 @@ def ecd(data_i, data_v):
         -1 * np.log10(-1 * data_i), data_v - op_H, n=12, peak="min"
     )
     m_H, k_H = least_sqaures(log_i_s_H, V_s_H)
+
+    if err == True:
+        sigma_m_H, sigma_k_H = least_sqaures(log_i_s_H, V_s_H, err=True)
+        sigma_ecd_H = m_H/k_H * np.sqrt((sigma_m_H/m_H)**2 + (sigma_k_H/k_H) ** 2)
+
+        sigma_m, sigma_k = least_sqaures(log_i_s, V_s, err=True)
+        sigma_ecd = m/k * np.sqrt((sigma_m/m)**2 + (sigma_k/k) ** 2)
+
+        return sigma_ecd, sigma_ecd_H
+
 
     return -m / k, -m_H / k_H
