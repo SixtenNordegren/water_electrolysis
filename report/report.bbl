@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{5}%
+\begin{thebibliography}{6}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -68,6 +68,17 @@
   {journal} {\bibinfo  {journal} {Renewable and Sustainable Energy Reviews}\
   }\textbf {\bibinfo {volume} {68}},\ \bibinfo {pages} {563} (\bibinfo {year}
   {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Zeng}\ and\ \citenamefont
+  {Zhang}(2010)}]{ZENG2010307}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Zeng}}\ and\ \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Zhang}},\
+  }\bibfield  {title} {\bibinfo {title} {Recent progress in alkaline water
+  electrolysis for hydrogen production and applications},\ }\href
+  {https://doi.org/https://doi.org/10.1016/j.pecs.2009.11.002} {\bibfield
+  {journal} {\bibinfo  {journal} {Progress in Energy and Combustion Science}\
+  }\textbf {\bibinfo {volume} {36}},\ \bibinfo {pages} {307} (\bibinfo {year}
+  {2010})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Shiva Kumar}}\ and\ \citenamefont
   {Himabindu}(2019)}]{SHIVAKUMAR2019442}%
   \BibitemOpen

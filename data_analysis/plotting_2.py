@@ -110,55 +110,55 @@ ecd_hydrogen = {
 
 
 def main():
-    # fig, axs = plt.subplots(1, 4, sharey=True)
-    # axs[0].plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
-    # axs[1].plot(Pl_Cu_V_avg, Pl_Cu_I_avg)
-    # axs[2].plot(Pl_Fe_V_avg, Pl_Fe_I_avg)
-    # axs[3].plot(Pl_Ni_V_avg, Pl_Ni_I_avg)
+    fig, axs = plt.subplots(1, 4, sharey=True)
+    axs[0].plot(Pl_Pl_V_avg, Pl_Pl_I_avg)
+    axs[1].plot(Pl_Cu_V_avg, Pl_Cu_I_avg)
+    axs[2].plot(Pl_Fe_V_avg, Pl_Fe_I_avg)
+    axs[3].plot(Pl_Ni_V_avg, Pl_Ni_I_avg)
 
-    # counter = 0
-    # for i in axs:
-    # axs[counter].grid()
-    # axs[counter].set_xlabel("V (v)")
+    counter = 0
+    for i in axs:
+        axs[counter].grid()
+        axs[counter].set_xlabel("E (V)")
 
-    # counter += 1
-    # axs[0].set_title("Platinum")
-    # axs[1].set_title("Copper")
-    # axs[2].set_title("Iron")
-    # axs[3].set_title("Nickel")
+        counter += 1
+    axs[0].set_title("Platinum")
+    axs[1].set_title("Copper")
+    axs[2].set_title("Iron")
+    axs[3].set_title("Nickel")
 
-    # axs[0].set_ylabel("i (mA/cm^2)")
+    axs[0].set_ylabel("i (mA/cm^2)")
 
-    # plt_name = "plots/multiplot_avg_li.pdf"
-    # if os.path.isfile(plt_name) == True:
-    # os.remove(plt_name)
-    # plt.savefig(plt_name, type="pdf")
-    # plt.show()
-
-    Slope_Pl_hydrogen = TafelSlope(Pl_Pl_V_avg, ecd_hydrogen["Platinum"], Pl_Pl_I_avg)
-    
-    Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="min")
-    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="max")
-
-    taf = Tafel_OP(Pl_I, ecd_hydrogen["Platinum"], Slope_Pl_hydrogen)
-    plt.plot(
-        1*Pl_I,
-        1*taf,
-        label="Theoretical prediction",
-    )
-    plt.plot(Pl_I, Pl_V, label="Collected data")
-    plt.legend()
-    plt.grid()
-
-    plt_name = "plots/fin.pdf"
-    plt.xlabel("Current density i (mA / cm^2)")
-    plt.ylabel("Potential V (V)")
+    plt_name = "plots/multiplot_avg_li.pdf"
     if os.path.isfile(plt_name) == True:
         os.remove(plt_name)
     plt.savefig(plt_name, type="pdf")
     plt.show()
 
-    print(Slope_Pl_hydrogen)
+    # Slope_Pl_hydrogen = TafelSlope(Pl_Pl_V_avg, ecd_hydrogen["Platinum"], Pl_Pl_I_avg)
+    
+    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="min")
+    # # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="max")
+
+    # taf = Tafel_OP(Pl_I, ecd_hydrogen["Platinum"], Slope_Pl_hydrogen)
+    # plt.plot(
+        # 1*Pl_I,
+        # 1*taf,
+        # label="Theoretical prediction",
+    # )
+    # plt.plot(Pl_I, Pl_V, label="Collected data")
+    # plt.legend()
+    # plt.grid()
+
+    # plt_name = "plots/fin.pdf"
+    # plt.xlabel("Current density i (mA / cm^2)")
+    # plt.ylabel("Potential E (V)")
+    # if os.path.isfile(plt_name) == True:
+        # os.remove(plt_name)
+    # plt.savefig(plt_name, type="pdf")
+    # plt.show()
+
+    # print(Slope_Pl_hydrogen)
 
 
 if __name__ == "__main__":

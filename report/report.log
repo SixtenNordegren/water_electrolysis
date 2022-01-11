@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.8.4)  9 JAN 2022 02:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.8.4)  10 JAN 2022 17:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -496,10 +496,10 @@ File: tikzlibrarybackgrounds.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 ) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypetri.code.tex
 File: tikzlibrarypetri.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 )
-Class revtex4-2 Info: Unrecognized LaTeX tabular. Please update this document class! (Proceeding with fingers crossed.) on input line 12.
-Class revtex4-2 Info: cite was not loaded (OK!) on input line 12.
-Class revtex4-2 Info: mcite was not loaded (OK!) on input line 12.
-Class revtex4-2 Info: multicol was not loaded (OK!) on input line 12.
+Class revtex4-2 Info: Unrecognized LaTeX tabular. Please update this document class! (Proceeding with fingers crossed.) on input line 11.
+Class revtex4-2 Info: cite was not loaded (OK!) on input line 11.
+Class revtex4-2 Info: mcite was not loaded (OK!) on input line 11.
+Class revtex4-2 Info: multicol was not loaded (OK!) on input line 11.
  (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count294
@@ -507,23 +507,23 @@ File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
 ) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-Package hyperref Info: Link coloring OFF on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+Package hyperref Info: Link coloring OFF on input line 11.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -533,9 +533,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count295
 )
-LaTeX Info: Redefining \ref on input line 12.
-LaTeX Info: Redefining \pageref on input line 12.
-LaTeX Info: Redefining \nameref on input line 12.
+LaTeX Info: Redefining \ref on input line 11.
+LaTeX Info: Redefining \pageref on input line 11.
+LaTeX Info: Redefining \nameref on input line 11.
  (./report.out) (./report.out)
 \@outlinefile=\write5
 \openout5 = `report.out'.
@@ -561,89 +561,75 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-Class revtex4-2 Info: Taking \maketitle back from hyperref on input line 12.
+Class revtex4-2 Info: Taking \maketitle back from hyperref on input line 11.
 \openout3 = `reportNotes.bib'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 22.
+(Font)              <7> on input line 21.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 22.
-
-
-LaTeX Warning: Reference `fig: potentiostat' on page 1 undefined on input line 100.
-
-</home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf, id=54, 462.52798pt x 346.89601pt>
+(Font)              <5> on input line 21.
+</home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf, id=56, 462.52798pt x 346.89601pt>
 File: /home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf Graphic file (type pdf)
 <use /home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf>
-Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf  used on input line 104.
+Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf  used on input line 110.
 (pdftex.def)             Requested size: 221.3985pt x 166.04768pt.
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 127.
-
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 127.
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 133.
 
 
-Class revtex4-2 Warning: Deferred float stuck during \clearpage processing.
+Underfull \hbox (badness 10000) in paragraph at lines 172--177
+\OT1/cmr/m/n/10 at []$\OT1/cmtt/m/n/10 https : / / github . com / SixtenNordegren / Water _
+ []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 174.
+(Font)              <9> on input line 180.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 174.
-<~/water_electrolysis/data_analysis/plots/data_plot_9.pdf, id=82, 462.52798pt x 346.89601pt>
+(Font)              <6> on input line 180.
+<~/water_electrolysis/data_analysis/plots/data_plot_9.pdf, id=85, 462.52798pt x 346.89601pt>
 File: ~/water_electrolysis/data_analysis/plots/data_plot_9.pdf Graphic file (type pdf)
 <use ~/water_electrolysis/data_analysis/plots/data_plot_9.pdf>
-Package pdftex.def Info: ~/water_electrolysis/data_analysis/plots/data_plot_9.pdf  used on input line 189.
+Package pdftex.def Info: ~/water_electrolysis/data_analysis/plots/data_plot_9.pdf  used on input line 195.
 (pdftex.def)             Requested size: 233.69925pt x 175.27373pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-</home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf, id=84, 462.52798pt x 346.89601pt>
+</home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf, id=87, 462.52798pt x 346.89601pt>
 File: /home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf Graphic file (type pdf)
 <use /home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf>
-Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf  used on input line 220.
+Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf  used on input line 213.
 (pdftex.def)             Requested size: 206.5472pt x 154.91078pt.
-</home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf, id=85, 462.52798pt x 346.89601pt>
+</home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf, id=88, 462.52798pt x 346.89601pt>
 File: /home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf Graphic file (type pdf)
 <use /home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf>
-Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf  used on input line 225.
+Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf  used on input line 218.
 (pdftex.def)             Requested size: 206.5472pt x 154.91078pt.
 [2 </home/sixten/water_electrolysis/data_analysis/plots/data_plot_1.pdf> </home/sixten/water_electrolysis/data_analysis/plots/data_plot_9.pdf
 
 pdfTeX warning: pdflatex (file /home/sixten/water_electrolysis/data_analysis/plots/data_plot_9.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->]
-</home/sixten/water_electrolysis/data_analysis/plots/fin.pdf, id=167, 462.52798pt x 346.89601pt>
-File: /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf Graphic file (type pdf)
-<use /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf>
-Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf  used on input line 285.
-(pdftex.def)             Requested size: 246.0pt x 184.49977pt.
- [3 </home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf> </home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf
+>] [3 </home/sixten/water_electrolysis/data_analysis/plots/Cropped_data.pdf> </home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf
 
 pdfTeX warning: pdflatex (file /home/sixten/water_electrolysis/data_analysis/plots/multiplot_avg_li.pdf): PDF inclusion: multiple pdfs with page group included in a single page
-> </home/sixten/water_electrolysis/data_analysis/plots/fin.pdf
-
-pdfTeX warning: pdflatex (file /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] (./report.bbl) [4] (./report.aux)
-
-LaTeX Warning: There were undefined references.
-
+>]
+</home/sixten/water_electrolysis/data_analysis/plots/fin.pdf, id=269, 462.52798pt x 346.89601pt>
+File: /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf Graphic file (type pdf)
+<use /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf>
+Package pdftex.def Info: /home/sixten/water_electrolysis/data_analysis/plots/fin.pdf  used on input line 376.
+(pdftex.def)             Requested size: 246.0pt x 184.49977pt.
+ (./report.bbl [4 </home/sixten/water_electrolysis/data_analysis/plots/fin.pdf>]) [5] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 562EDC41911D0AC996BC6DF665CAC881;640.
+(rerunfilecheck)             Checksum: EF8652B06FA1263F029753C3697E58A3;640.
  ) 
 Here is how much of TeX's memory you used:
- 21529 strings out of 481252
- 431963 string characters out of 5915889
- 756847 words of memory out of 5000000
- 38046 multiletter control sequences out of 15000+600000
- 410806 words of font info for 51 fonts, out of 8000000 for 9000
+ 21537 strings out of 481252
+ 432428 string characters out of 5915889
+ 752949 words of memory out of 5000000
+ 38050 multiletter control sequences out of 15000+600000
+ 410974 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,10n,89p,444b,835s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on report.pdf (4 pages, 323457 bytes).
+ 87i,10n,89p,444b,831s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on report.pdf (5 pages, 348200 bytes).
 PDF statistics:
- 365 PDF objects out of 1000 (max. 8388607)
- 188 compressed objects within 2 object streams
- 36 named destinations out of 1000 (max. 500000)
+ 400 PDF objects out of 1000 (max. 8388607)
+ 212 compressed objects within 3 object streams
+ 39 named destinations out of 1000 (max. 500000)
  126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

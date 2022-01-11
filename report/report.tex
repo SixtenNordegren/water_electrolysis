@@ -1,4 +1,4 @@
-\documentclass[twocolumn, floatfix]{revtex4-2}
+\documentclass[twocolumn]{revtex4-2}
 
 \usepackage{bm}
 \usepackage{hyperref}
@@ -6,7 +6,6 @@
 \usepackage{subcaption}
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,automata,backgrounds,petri}
-
 \usepackage{natbib}
 
 \begin{document}
@@ -47,7 +46,7 @@ The usage of water electrolysis as a tool for hydrogen production has a lot of u
 only ingredient and the single byproduct being oxygen makes the process comparably
 environmentally friendly to it's alternatives \cite{DOSSANTOS2017563}.
 \par 
-As of today water electrolysis is responsible for about $4\%$ of the global Hydrogen
+As of today water electrolysis is responsible for about $4\%$\cite{ZENG2010307} of the global Hydrogen
 production. The reason for the quite low market share in spite of all the previously mentioned upsides 
 is that the process is simply to inefficient and it's materials to expensive\cite{SHIVAKUMAR2019442}.
 
@@ -68,28 +67,35 @@ The Tafel equation describes the overpotential as a function of the rate of the 
 
 \begin{figure}[b]
 	\centering
-	\begin{tikzpicture}[node distance = 2.5cm]
-	  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=white!20,minimum size=6mm]
-	  \tikzstyle{red place}=[place,draw=blue!75,fill=blue!75, minimum size= 50mm]
-	  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
-				  fill=black!20,minimum size=9mm]
+	\begin{tikzpicture}[node distance = 1.6cm]
+	  \tikzstyle{electrode}=[circle,thick,draw=blue!75,fill=white!20,minimum size=6mm]
+	  \tikzstyle{container}=[place,draw=blue!75,fill=blue!75, minimum size= 50mm]
+	  \tikzstyle{potentiostat}=[rectangle,thick,draw=black!75,
+				  fill=black!20,minimum size=9mm ]
+	
+	\node (center_top) {};
+	\node (center_top+)[potentiostat] [above of= center_top]{Potentiostat};
+	\node (center_center) [container] [below of= center_top]{};
+	\node (center_bottom)[electrode] [below of= center_center] {\textbf{CE}};
+	\node (right_bottom)[electrode] [below right of= center_center]{\textbf{TE}};
+	\node (left_bottom)[electrode] [below left of= center_center]{\textbf{WE}};
 
-		
-		\node (a2) {};
-		\node[red place](center) [below of =a2]  {};
+	\draw (center_top+) -- (left_bottom) ;
+	\draw (center_top+) -- (right_bottom) ;
+	\draw (center_top+) -- (center_bottom) ;
 
-		\node[transition] (a2.1) [above of =a2] {Potentiostat};
-		\node (b1)[place] [below right of =a2] {\textbf{WE}};
-		\node[place] (c1) [below of =a2] {\textbf{CE}};
-		\node (b3)[place] [below left of =a2] {\textbf{TE}};
 
-		\draw (a2.1) -- (a2.1);
-		\draw (a2) -- (b1);
-		\draw (a2) -- (b3);
-		\draw (a2) -- (c1);
-		
-	 
+		%\draw (a2) -- (a2.1);
+		%\draw (a2) -- (b1);
+		%\draw (a2) -- (b3);
+		%\draw (a2) -- (c1);
 	\end{tikzpicture}
+	\caption[]{Diagram of experimental setup.\newline
+	\textbf{CE}: Counter electrode \newline
+	\textbf{WE}: Working electrode \newline
+	\textbf{TE}: Test electrode \hspace{1.9cm}
+\label{fig: potentiostat}}
+
 \end{figure}
 \section{Method}
 \subsection{Catalyst testing}
@@ -163,9 +169,9 @@ We then use the Tafel equation to approximate a value for the Tafel slope ($A$).
 the theoretical value to the experimental one as a function of exchange current density.
 
 \section{Results}
-All the data for all the experiments can be found \href{
-https://www.github.com/SixtenNordegren/Water_Electrolysis}{here} along with the code 
-for some of the data analysis. Due to the magnitude of data collected I won't be able to
+All the data for all the experiments can be found at \url{https://github.com/SixtenNordegren/Water_Electrolysis
+} along with the code 
+for of the data analysis. Due to the magnitude of data collected I won't be able to
 give each and every data set collected a fair showing. I will be presenting a selected 
 few sets of data.
 
@@ -175,11 +181,11 @@ few sets of data.
 	\hline
 	& Copper & Platinum & Nickel & Gold \\
 	\hline
-	Width $(\text{cm})$&0.65 &0.80&0.65&0.65\\
+	Width $(\text{cm})$&$0.65\pm 0.1$ &$0.80 \pm 0.1$&$0.65 \pm 0.1$&$0.65 \pm 0.1$\\
 	\hline
-	Length $(\text{cm})$ &0.60&1.50&1.30&1.60\\
+	Length $(\text{cm})$ &$0.60 \pm 0.1$&$1.50 \pm 0.1$&$1.30 \pm 0.1$&$1.60 \pm 0.1$\\
 	\hline
-	Area $(\text{cm}^2)$ &$0.66$&$1.20$&$1.04$&$0.85$\\
+	Area $(\text{cm}^2)$ &$0.7 \pm 0.2$&$1.2 \pm 0.2$&$1.4 \pm 0.2$&$0.9 \pm 0.1$\\
 	\hline
 \end{tabular}
 	\caption{Table of measured length of catalyst submerged into water.\label{table: area}}
@@ -200,19 +206,6 @@ the water surface, which often resulted in a slanted mark of water on the electr
 In those cases we simply averaged the length of the wet sides and calculated the area as 
 if they were a perfect rectangles. 
 
-\begin{table}[h]
-	\begin{tabular}{c | c}
-		HER & V $H_2$ (mL) \\
-		\hline
-		\hline
-		Pt & 2 \\
-		Au & 16 \\
-		Co V 2 \\
-	\end{tabular}
-	\caption{Collected Hydrogen gas\label{table: gases}}
-	
-\end{table}
-\par 
 
 \begin{figure*}[t]
 	\centering
@@ -240,13 +233,16 @@ be why.
 Material & $i_{ecd}$ $(A/cm^2)$ \\
 \hline
 \hline
-Platinum & 2.651 \\ 
+Platinum & $2.92 \pm 0.04$\\ 
 
-Copper & 3.875 \\ 
+Copper & $4.7 \pm 0.5$\\ 
 
-Gold & 1.16 \\ 
+Gold & $0.032 \pm 0.003$\\ 
 
-Nickel & 7.281 \\ 
+Nickel & $10.2 \pm 0.1$\\ 
+
+Iron & $1.343 \pm 0.007$\\ 
+
 \end{tabular}
 	\caption{Table of current exchange current density for the hydrogen reaction\label{table: ecd_H}}
 \end{table}
@@ -256,17 +252,30 @@ Nickel & 7.281 \\
 		Material & $i_{ecd}$ $(A/cm^2)$ \\
 		\hline
 		\hline
-		Platinum& -1.24\\
-						 
-		Copper& -1.19\\
+		Platinum & $0.32 \pm 0.01$\\ 
 
-		Gold& 0.62\\
-					    
-		Nickel& -0.03\\
+		Copper & $0.19 \pm 0.01$\\ 
+
+		Gold & $0.64 \pm 0.01$\\ 
+
+		Nickel & $0.57 \pm 0.01$\\ 
+
+		Iron & $0.005 \pm 0.007$\\ 
+
 	\end{tabular}
 	\caption{Oxygen Exchange current densities\label{table: ecd_O}}
 \end{table}
 
+\begin{table}[h]
+	\begin{tabular}{c | c}
+		HER & V $H_2$ (mL) \\
+		\hline
+		\hline
+		Pt &$ 2 \pm 0.5$ \\
+		Au & $2.6 \pm 0.5$ \\
+	\end{tabular}
+	\caption{Collected Hydrogen gas\label{table: gases}}
+\end{table}
 \par
 The gas that was collected can be found in in table \ref{table: gases}. Originally we were supposed to 
 measure the oxygen production as well as the hydrogen production, but after  the change of electrolyte
@@ -277,15 +286,22 @@ In figure \ref{fig: tafel} we see the Tafel equation compared to some of the col
 Tafel equation is calculated with the Tafel slope.
 
 \begin{equation}
-	A = 1.76 \pm 0.01 V
+	 A = \mp\frac{\eta}{\log{(i/i_o)}} 
+\end{equation}
+
+
+\begin{equation}
+	A \approx 1.76 \pm 0.01 V
+	\label{eq: tafel_slope}
 \end{equation}
 Which is in turn generated by solving the Tafel equation \ref{eq: tafel} repeatedly for each
 data point in the current exchange density, and taking the average.
-\begin{figure}[b]
-	\includegraphics[width=\linewidth]{/home/sixten/water_electrolysis/data_analysis/plots/fin.pdf}
-	\caption{Theoretical prediction using Tafel\ref{eq: tafel} equation and measured
-	values of the potential.\label{fig: tafel}}
-\end{figure}
+
+We can see the overpotential predicted by the Tafel equation in \ref{fig: tafel} compared
+to the collected data. The figure is in quite good agreement for the largest values, but diverges
+quite quickly for the smaller ones, this is due to the logarithmic nature of the Tafel equation\ref{eq: tafel}.
+
+
 \section{Discussion} 
 
 The question, what catalyst is best fitted to make either reaction as efficient as 
@@ -351,13 +367,25 @@ Moreover It seems that the gold managed to outproduce platinum in the \textbf{HE
 
 The determination of effective catalysts where thankfully more reliable. However even this experiment
 isn't perfect. 
-For most of the measurements there are a slight bump at the beginning of the \textbf{HER} this is due to
+For most of the measurements there were a slight bump at the beginning of the \textbf{HER} this is due to
 Oxygen that's left on the catalyst from when it had a different charge which can react after the polarity
 switch and causing some current not pertaining to the experiment. To counteract this we pumped in some 
 nitrogen but still didn't manage to entirely curb the occurrence.
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{/home/sixten/water_electrolysis/data_analysis/plots/fin.pdf}
+	\caption{Theoretical prediction using Tafel equation\ref{eq: tafel} versus collected data. Collected
+	from \textbf{HER}.\newline \textbf{WE}: Pt, \textbf{CE}: Pt.\label{fig: tafel}}
+\end{figure}
 \section{Conclusion}
-It seems like the best catalyst for electrolysis of water was Platinum for the \textbf{HER} and
-Nickel for the \textbf{OER}. No real conclusion could be drawn from the gas collection experiment,
-and should be found inconclusive.
+Using an experimental setup to generate data for different catalysts and consequently analyzed that data.
+The best catalyst pair to maximise hydrogen production is found. 
+\par
+The overpotential is calculated \ref{eq: tafel} which unlocks the ability to compare the overpotential as a 
+function of the current density then compare that theoretical prediction to the data that was gathered.
+\ref{fig: tafel}. 
+In an attempt to verify the predictions, tubes are set-up in order to collect the gas produced from
+the reactions but, ultimately fail and the results are found to be inconclusive.
+\pagebreak
 \bibliography{bibliography}
 \end{document}
