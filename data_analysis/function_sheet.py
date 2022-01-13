@@ -229,7 +229,7 @@ def ecd(data_i, data_v, err=False):
     """
 
     # Oxygen reaction
-    log_i_s, V_s = list_cropper_2(np.log10(np.array(data_i)), data_v - op_O)
+    log_i_s, V_s = list_cropper_2(np.log10(np.array(data_i)), data_v)
     m, k = least_sqaures(log_i_s, V_s)
 
     # Hydrogen reaction
@@ -242,7 +242,7 @@ def ecd(data_i, data_v, err=False):
     # This is what the extra line of code is doing.
 
     log_i_s_H, V_s_H = list_cropper_2(
-        -1 * np.log10(-1 * data_i), data_v - op_H, n=12, peak="min"
+        -1 * np.log10(-1 * data_i), data_v, n=12, peak="min"
     )
     m_H, k_H = least_sqaures(log_i_s_H, V_s_H)
 

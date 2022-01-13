@@ -135,30 +135,53 @@ def main():
     plt.savefig(plt_name, type="pdf")
     plt.show()
 
-    # Slope_Pl_hydrogen = TafelSlope(Pl_Pl_V_avg, ecd_hydrogen["Platinum"], Pl_Pl_I_avg)
+    Slope_Pl_hydrogen = TafelSlope(Pl_Pl_V_avg, ecd_hydrogen["Platinum"], Pl_Pl_I_avg)
     
-    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="min")
-    # # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="max")
+    Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="min")
+    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=6, peak="max")
 
-    # taf = Tafel_OP(Pl_I, ecd_hydrogen["Platinum"], Slope_Pl_hydrogen)
-    # plt.plot(
-        # 1*Pl_I,
-        # 1*taf,
-        # label="Theoretical prediction",
-    # )
-    # plt.plot(Pl_I, Pl_V, label="Collected data")
-    # plt.legend()
-    # plt.grid()
+    taf = Tafel_OP(Pl_I, ecd_hydrogen["Platinum"], Slope_Pl_hydrogen)
+    plt.plot(
+        1*Pl_I,
+        1*taf,
+        label="Theoretical prediction",
+    )
+    plt.plot(Pl_I, Pl_V, label="Collected data")
+    plt.legend()
+    plt.grid()
 
-    # plt_name = "plots/fin.pdf"
-    # plt.xlabel("Current density i (mA / cm^2)")
+    plt_name = "plots/fin.pdf"
+    plt.xlabel("Current density i (mA / cm^2)")
+    plt.ylabel("Potential E (V)")
+    if os.path.isfile(plt_name) == True:
+        os.remove(plt_name)
+    plt.savefig(plt_name, type="pdf")
+    plt.show()
+
+    print(Slope_Pl_hydrogen)
+
+# def main():
+
+    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=8, peak="max")
+    # m, k = least_sqaures(Pl_I, Pl_V)
+    # x = np.linspace(0, 21, num=1000)
+    # regression = [y for y in m + k * x]
+
+    # Pl_I, Pl_V = list_cropper_2(Pl_Pl_I_avg, Pl_Pl_V_avg, n=3, peak="max")
+    # plt.plot(Pl_V, Pl_I)
+    # plt.plot(regression, x)
+
+    # x_axis = np.linspace(0.25,1.3, 1000)
+
+
+    # plt.plot(x_axis, np.zeros((1000)), color='black', label="Platinum data")
+    # plt.scatter(regression[0], 0, s=5000, facecolors='none', edgecolors='red', label="Current exchange density")
+
+    # plt.xlabel("Current density i (mA/cm^2)")
     # plt.ylabel("Potential E (V)")
-    # if os.path.isfile(plt_name) == True:
-        # os.remove(plt_name)
-    # plt.savefig(plt_name, type="pdf")
+    # plt.grid()
+    # plt.savefig("plots/pl_current_exchange_density.pdf", format="pdf")
     # plt.show()
-
-    # print(Slope_Pl_hydrogen)
 
 
 if __name__ == "__main__":
